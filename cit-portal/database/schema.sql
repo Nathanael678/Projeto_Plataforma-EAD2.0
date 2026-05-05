@@ -1,0 +1,237 @@
+-- ═══════════════════════════════════════════════════════════════
+--  CIT — Centro de Inovação Tecnológica
+--  schema.sql  |  MySQL 8.0+
+--  Criação de todas as tabelas necessárias para CRUD completo
+-- ═══════════════════════════════════════════════════════════════
+
+CREATE DATABASE IF NOT EXISTS cit_portal
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE cit_portal;
+
+-- ────────────────────────────────────────────────────────────────
+-- 1. PROFESSORES
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS professores (
+  id            INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  nome          VARCHAR(60)     NOT NULL,
+  sobrenome     VARCHAR(80)     NOT NULL,
+  email         VARCHAR(120)    NOT NULL UNIQUE,
+  titulacao     ENUM('graduacao','especializacao','mestrado','doutorado') NOT NULL DEFAULT 'mestrado',
+  departamento  VARCHAR(80)     NOT NULL,
+  created_at    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 2. CURSOS (graduação / habilitações)
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS cursos (
+  id            INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  codigo        VARCHAR(10)     NOT NULL UNIQUE,   -- ex: CC, ES, SI
+  nome          VARCHAR(120)    NOT NULL,
+  icone         VARCHAR(10)     NOT NULL DEFAULT '💻',
+  duracao_anos  TINYINT UNSIGNED NOT NULL DEFAULT 4,
+  turno         ENUM('matutino','vespertino','noturno','integral') NOT NULL DEFAULT 'noturno',
+  descricao     TEXT,
+  ativo         TINYINT(1)      NOT NULL DEFAULT 1,
+  created_at    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 3. ALUNOS (users)
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS alunos (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  ra              VARCHAR(12)     NOT NULL UNIQUE,   -- Registro do Aluno
+  nome            VARCHAR(60)     NOT NULL,
+  sobrenome       VARCHAR(80)     NOT NULL,
+  email           VARCHAR(120)    NOT NULL UNIQUE,
+  cpf             VARCHAR(14)     NOT NULL UNIQUE,   -- formato 000.000.000-00
+  nascimento      DATE            NOT NULL,
+  telefone        VARCHAR(20),
+  turno           ENUM('matutino','vespertino','noturno') NOT NULL DEFAULT 'noturno',
+  semestre        TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  ira             DECIMAL(4,2)    NOT NULL DEFAULT 0.00,  -- Índice de Rendimento Acadêmico
+  status          ENUM('ativo','trancado','concluido','cancelado') NOT NULL DEFAULT 'ativo',
+  avatar          VARCHAR(5)      NOT NULL DEFAULT 'AL',   -- iniciais para avatar
+  password_hash   VARCHAR(255)    NOT NULL,
+  curso_id        INT UNSIGNED    NOT NULL,
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_aluno_curso FOREIGN KEY (curso_id) REFERENCES cursos (id) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 4. DISCIPLINAS
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS disciplinas (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  codigo          VARCHAR(10)     NOT NULL UNIQUE,  -- ex: CC301
+  nome            VARCHAR(120)    NOT NULL,
+  icone           VARCHAR(10)     NOT NULL DEFAULT '📚',
+  carga_horaria   SMALLINT UNSIGNED NOT NULL DEFAULT 60,  -- em horas
+  creditos        TINYINT UNSIGNED  NOT NULL DEFAULT 4,
+  semestre_ref    TINYINT UNSIGNED  NOT NULL DEFAULT 1,   -- semestre em que é ofertada
+  total_aulas     SMALLINT UNSIGNED NOT NULL DEFAULT 20,
+  descricao       TEXT,
+  professor_id    INT UNSIGNED,
+  curso_id        INT UNSIGNED    NOT NULL,
+  ativo           TINYINT(1)      NOT NULL DEFAULT 1,
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_disc_professor FOREIGN KEY (professor_id) REFERENCES professores (id) ON UPDATE CASCADE ON DELETE SET NULL,
+  CONSTRAINT fk_disc_curso     FOREIGN KEY (curso_id)     REFERENCES cursos (id)      ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 5. MATRICULAS (aluno × disciplina)
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS matriculas (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  aluno_id        INT UNSIGNED    NOT NULL,
+  disciplina_id   INT UNSIGNED    NOT NULL,
+  ano_semestre    VARCHAR(7)      NOT NULL,           -- ex: 2025.1
+  progresso       TINYINT UNSIGNED NOT NULL DEFAULT 0, -- 0-100 %
+  status          ENUM('ativo','aprovado','reprovado','trancado') NOT NULL DEFAULT 'ativo',
+  nota_p1         DECIMAL(4,2),
+  nota_p2         DECIMAL(4,2),
+  nota_final      DECIMAL(4,2),
+  faltas          TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_matricula (aluno_id, disciplina_id, ano_semestre),
+  CONSTRAINT fk_mat_aluno      FOREIGN KEY (aluno_id)       REFERENCES alunos      (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_mat_disciplina FOREIGN KEY (disciplina_id)  REFERENCES disciplinas (id) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 6. GRADE CURRICULAR (histórico completo por aluno)
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS grade_curricular (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  aluno_id        INT UNSIGNED    NOT NULL,
+  disciplina_id   INT UNSIGNED    NOT NULL,
+  nota            DECIMAL(4,2),
+  status          ENUM('done','active','locked') NOT NULL DEFAULT 'locked',
+  ano_semestre    VARCHAR(7),
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_grade (aluno_id, disciplina_id),
+  CONSTRAINT fk_grade_aluno      FOREIGN KEY (aluno_id)      REFERENCES alunos      (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_grade_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplinas (id) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 7. FINANCEIRO — mensalidades
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS mensalidades (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  aluno_id        INT UNSIGNED    NOT NULL,
+  descricao       VARCHAR(150)    NOT NULL,
+  vencimento      DATE            NOT NULL,
+  valor           DECIMAL(10,2)   NOT NULL,
+  status          ENUM('pending','paid','overdue','cancelled') NOT NULL DEFAULT 'pending',
+  pago_em         DATETIME,
+  boleto_codigo   VARCHAR(60),
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_mens_aluno FOREIGN KEY (aluno_id) REFERENCES alunos (id) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 8. NOTIFICAÇÕES
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS notificacoes (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  aluno_id        INT UNSIGNED,                     -- NULL = global
+  icone           VARCHAR(10)     NOT NULL DEFAULT '🔔',
+  texto           TEXT            NOT NULL,
+  lida            TINYINT(1)      NOT NULL DEFAULT 0,
+  tipo            ENUM('info','aviso','urgente','financeiro') NOT NULL DEFAULT 'info',
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_notif_aluno FOREIGN KEY (aluno_id) REFERENCES alunos (id) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 9. EVENTOS DO CALENDÁRIO
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS eventos (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  nome            VARCHAR(150)    NOT NULL,
+  data_evento     DATE            NOT NULL,
+  hora_inicio     TIME,
+  hora_fim        TIME,
+  local_evento    VARCHAR(100),
+  tipo            ENUM('prova','entrega','workshop','prazo','outro') NOT NULL DEFAULT 'outro',
+  curso_id        INT UNSIGNED,
+  disciplina_id   INT UNSIGNED,
+  criado_por      INT UNSIGNED,                     -- professor que criou
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_ev_curso       FOREIGN KEY (curso_id)       REFERENCES cursos      (id) ON UPDATE CASCADE ON DELETE SET NULL,
+  CONSTRAINT fk_ev_disciplina  FOREIGN KEY (disciplina_id)  REFERENCES disciplinas (id) ON UPDATE CASCADE ON DELETE SET NULL,
+  CONSTRAINT fk_ev_professor   FOREIGN KEY (criado_por)     REFERENCES professores (id) ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 10. MENSAGENS DO CHAT / SUPORTE
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS mensagens_chat (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  aluno_id        INT UNSIGNED    NOT NULL,
+  contato_sigla   VARCHAR(10)     NOT NULL,         -- ex: ST, PC, FA
+  remetente       ENUM('aluno','suporte') NOT NULL,
+  texto           TEXT            NOT NULL,
+  enviado_em      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  lida            TINYINT(1)      NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_chat_aluno FOREIGN KEY (aluno_id) REFERENCES alunos (id) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 11. AULAS / CONTEÚDO POR DISCIPLINA
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS aulas (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  disciplina_id   INT UNSIGNED    NOT NULL,
+  numero          TINYINT UNSIGNED NOT NULL,
+  titulo          VARCHAR(150)    NOT NULL,
+  descricao       TEXT,
+  duracao_min     SMALLINT UNSIGNED NOT NULL DEFAULT 50,
+  video_url       VARCHAR(300),
+  material_pdf    VARCHAR(300),
+  ordem           TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_aula (disciplina_id, numero),
+  CONSTRAINT fk_aula_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplinas (id) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ────────────────────────────────────────────────────────────────
+-- 12. PROGRESSO NAS AULAS (aluno × aula)
+-- ────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS progresso_aulas (
+  id              INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+  aluno_id        INT UNSIGNED    NOT NULL,
+  aula_id         INT UNSIGNED    NOT NULL,
+  concluida       TINYINT(1)      NOT NULL DEFAULT 0,
+  tempo_assistido INT UNSIGNED    NOT NULL DEFAULT 0,  -- em segundos
+  ultima_posicao  INT UNSIGNED    NOT NULL DEFAULT 0,  -- em segundos
+  updated_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_prog (aluno_id, aula_id),
+  CONSTRAINT fk_prog_aluno FOREIGN KEY (aluno_id) REFERENCES alunos (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_prog_aula  FOREIGN KEY (aula_id)  REFERENCES aulas   (id) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
