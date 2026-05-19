@@ -780,7 +780,7 @@ a, button, [role="button"], label { cursor: pointer; }
   width: calc(100% - var(--sidebar-w));
   background: var(--ground);
 }
-.main-inner { padding: var(--s8); max-width: 1100px; }
+.main-inner { padding: var(--s6) var(--s8); width: 100%; }
 
 /* VIEWS */
 .view { display: none; animation: viewIn 0.25s var(--ease) both; }
@@ -1547,6 +1547,93 @@ a, button, [role="button"], label { cursor: pointer; }
   .profile-grid { grid-template-columns: 1fr; }
   .dash-grid-stats { grid-template-columns: 1fr; }
 }
+
+/* ═══ LAYOUT FIX: views fill full content width ═══════════════════════════ */
+.main-inner { display: flex; flex-direction: column; min-height: calc(100vh - var(--topbar-h)); }
+.view { flex: 1; }
+
+/* ═══ FINANCIAL — guarantee full width ═══════════════════════════════════ */
+.fin-summary { width: 100%; }
+.panel { width: 100%; }
+
+/* ═══ GRADE — table fills panel ══════════════════════════════════════════ */
+.grade-table { width: 100%; }
+
+/* ═══ CALENDAR — layout fills width ══════════════════════════════════════ */
+.cal-layout { width: 100%; }
+.cal-grid { width: 100%; }
+
+/* ═══ PROFILE — full width sections ═════════════════════════════════════ */
+.profile-hero { width: 100%; }
+.profile-courses { width: 100%; }
+
+/* ═══ DASHBOARD — grids fill width ══════════════════════════════════════ */
+.dash-grid-stats { width: 100%; }
+.dash-grid { width: 100%; }
+
+/* ═══ LESSON — full width ════════════════════════════════════════════════ */
+.lesson-layout { width: 100%; }
+.lesson-progress-bar { width: 100%; }
+
+/* ═══ CHAT — fill height ════════════════════════════════════════════════ */
+.chat-shell { width: 100%; }
+
+/* ═══ COURSES GRID — fill width ════════════════════════════════════════ */
+.courses-view-grid { width: 100%; }
+
+/* ═══ VIEW HEADER — consistent spacing ═════════════════════════════════ */
+.view-header { padding-top: var(--s6); }
+
+/* ═══ PROFILE EDIT MODAL ════════════════════════════════════════════════ */
+.modal-veil {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  z-index: 800; display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.15s var(--ease);
+}
+.modal-veil.hidden { display: none; }
+.modal-box {
+  background: var(--paper); border-radius: var(--radius-lg);
+  padding: var(--s8); width: 100%; max-width: 460px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+  animation: dropIn 0.2s var(--ease);
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-title { font-family: var(--serif); font-size: 22px; letter-spacing: -0.02em; margin-bottom: var(--s6); }
+.modal-actions { display: flex; gap: var(--s3); margin-top: var(--s6); justify-content: flex-end; }
+.btn-cancel { padding: 9px 20px; border: 1px solid var(--ink-10); border-radius: var(--radius); font-size: 13px; color: var(--ink-60); transition: all var(--fast); }
+.btn-cancel:hover { border-color: var(--ink); color: var(--ink); }
+.btn-save { padding: 9px 20px; background: var(--ink); color: var(--paper); border-radius: var(--radius); font-size: 13px; font-weight: 500; transition: all var(--fast); }
+.btn-save:hover { background: var(--accent); }
+
+/* ═══ APP FOOTER ═══════════════════════════════════════════════════════ */
+.app-footer {
+  padding: var(--s5) var(--s8);
+  border-top: 1px solid var(--ink-05);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--ink-20);
+  margin-top: auto; background: var(--paper);
+}
+.app-footer a { color: var(--ink-20); transition: color var(--fast); }
+.app-footer a:hover { color: var(--ink); }
+
+/* ═══ HINT PILL on login page ══════════════════════════════════════════ */
+.demo-hint {
+  background: var(--ground); border: 1px solid var(--ink-05);
+  border-radius: var(--radius); padding: var(--s3) var(--s4);
+  font-size: 12px; color: var(--ink-40); margin-bottom: var(--s5);
+  line-height: 1.6;
+}
+.demo-hint strong { color: var(--ink); }
+
+/* ═══ RESPONSIVE EXTRA ═════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .lesson-layout { grid-template-columns: 1fr !important; }
+  .cal-layout    { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 768px) {
+  .profile-grid  { grid-template-columns: 1fr 1fr !important; }
+  .app-footer    { flex-direction: column; gap: var(--s2); text-align: center; }
+}
 </style>
 </head>
 <body>
@@ -1660,7 +1747,7 @@ a, button, [role="button"], label { cursor: pointer; }
       <div class="number-label">Empregabilidade</div>
     </div>
     <div class="number-item">
-      <div class="number-val">21</div>
+      <div class="number-val">17</div>
       <div class="number-label">Anos de excelência</div>
     </div>
   </div>
@@ -1850,7 +1937,7 @@ a, button, [role="button"], label { cursor: pointer; }
         <div class="auth-left-headline">
           Bem-vindo<br><em>de volta.</em>
         </div>
-        <p class="auth-left-desc">Acesse o portal acadêmico e continue sua jornada de aprendizado na CIT.</p>
+        <p class="auth-left-desc">Acesse o portal acadêmico e continue sua jornada de aprendizado no CIT.</p>
       </div>
       <div class="auth-left-features">
         <div class="auth-feature"><div class="auth-feature-bullet"></div>40+ cursos de tecnologia</div>
@@ -1862,6 +1949,9 @@ a, button, [role="button"], label { cursor: pointer; }
       <div class="auth-form-wrap">
         <h1 class="auth-form-title">Entrar</h1>
         <p class="auth-form-desc">Acesse com seu RA e senha cadastrados.</p>
+        <div class="demo-hint">
+          💡 <strong>Acesso demo:</strong> RA <strong>2023001234</strong> · Senha <strong>senha123</strong>
+        </div>
         <div class="form-field">
           <label class="form-label" for="loginRA">RA — Registro do Aluno</label>
           <input type="text" class="form-input" id="loginRA" placeholder="Ex: 2023001234" maxlength="12" autocomplete="username">
@@ -2391,7 +2481,7 @@ a, button, [role="button"], label { cursor: pointer; }
                 <span class="profile-tag">Osasco, SP</span>
               </div>
             </div>
-            <button class="btn-secondary" onclick="toast('info','Edição de perfil em breve','ℹ️')">Editar perfil</button>
+            <button class="btn-secondary" onclick="openProfileModal()">Editar perfil</button>
           </div>
           <div class="profile-grid" style="grid-template-columns:repeat(4,1fr)">
             <div class="profile-stat-card"><div class="psv">62%</div><div class="psl">Conclusão</div></div>
@@ -2411,7 +2501,7 @@ a, button, [role="button"], label { cursor: pointer; }
             <div class="panel">
               <div class="panel-header"><div class="panel-title">Dados pessoais</div></div>
               <div class="panel-body" style="font-size:13px;display:flex;flex-direction:column;gap:var(--s3)">
-                <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-40)">E-mail</span><span style="font-size:12px">joao@aluno.cit.edu.br</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-40)">E-mail</span><span id="profileEmail" style="font-size:12px">joao@aluno.cit.edu.br</span></div>
                 <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-40)">Telefone</span><span>(11) 9 9876-5432</span></div>
                 <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-40)">Nascimento</span><span>15/03/2004</span></div>
                 <div style="display:flex;justify-content:space-between"><span style="color:var(--ink-40)">Ingresso</span><span>2023.1</span></div>
@@ -2581,8 +2671,25 @@ function showPage(id) {
 }
 
 /* ─── Auth ─── */
+/* Mock student DB */
+const mockUsers = [
+  { ra:'2023001234', senha:'senha123', nome:'João Santos',       curso:'Ciência da Computação', semestre:'4º', avatar:'JS' },
+  { ra:'2022005678', senha:'senha123', nome:'Maria Oliveira',    curso:'Ciência da Computação', semestre:'5º', avatar:'MO' },
+  { ra:'2024009012', senha:'senha123', nome:'Pedro Almeida',     curso:'Engenharia de Software', semestre:'2º', avatar:'PA' },
+  { ra:'2021003456', senha:'senha123', nome:'Ana Rodrigues',     curso:'Cibersegurança',          semestre:'6º', avatar:'AB' },
+  { ra:'2023007890', senha:'senha123', nome:'Carlos Martins',    curso:'Inteligência Artificial', semestre:'4º', avatar:'CE' },
+  { ra:'2022001122', senha:'senha123', nome:'Fernanda Lima',     curso:'Ciência da Computação', semestre:'5º', avatar:'FL' },
+  { ra:'2024003344', senha:'senha123', nome:'Lucas Mendes',      curso:'Sistemas de Informação', semestre:'2º', avatar:'LM' },
+  { ra:'2020008899', senha:'senha123', nome:'Gabriela Nunes',    curso:'Ciência de Dados',       semestre:'8º', avatar:'GN' },
+  { ra:'2023005566', senha:'senha123', nome:'Rafael Carvalho',   curso:'Engenharia de Software', semestre:'4º', avatar:'RC' },
+  { ra:'2021006677', senha:'senha123', nome:'Juliana Torres',    curso:'Ciência da Computação', semestre:'6º', avatar:'JT' },
+  { ra:'2024007788', senha:'senha123', nome:'Thiago Pires',      curso:'Cibersegurança',          semestre:'1º', avatar:'TA' },
+  { ra:'2019009900', senha:'senha123', nome:'Camila Ramos',      curso:'Inteligência Artificial', semestre:'8º', avatar:'CR' },
+];
+let loggedUser = null;
+
 function doLogin() {
-  const ra = document.getElementById('loginRA').value.trim();
+  const ra   = document.getElementById('loginRA').value.trim();
   const pass = document.getElementById('loginPass').value;
   let ok = true;
   if (!ra || ra.length < 6) {
@@ -2603,15 +2710,86 @@ function doLogin() {
   }
   if (!ok) return;
   toast('info','Autenticando…','🔐');
-  setTimeout(() => { showPage('page-app'); toast('success','Bem-vindo de volta, João!','✓'); }, 1000);
+  setTimeout(() => {
+    const user = mockUsers.find(u => u.ra === ra && u.senha === pass);
+    if (!user) {
+      document.getElementById('loginPass').classList.add('form-input-error');
+      document.getElementById('loginPass-err').textContent = 'RA ou senha incorretos';
+      document.getElementById('loginPass-err').classList.add('show');
+      toast('error','RA ou senha inválidos','✗');
+      return;
+    }
+    loggedUser = user;
+    sessionStorage.setItem('cit_tok', 'tok_' + Math.random().toString(36).slice(2));
+    sessionStorage.setItem('cit_user', JSON.stringify(user));
+    applyUser(user);
+    showPage('page-app');
+    toast('success','Bem-vindo de volta, ' + user.nome.split(' ')[0] + '!','✓');
+  }, 900);
+}
+
+function applyUser(user) {
+  // Sidebar
+  document.querySelectorAll('.user-av, .topbar-user-av').forEach(el => el.textContent = user.avatar);
+  const uname = document.querySelector('.user-name');
+  const ura   = document.querySelector('.user-ra');
+  if (uname) uname.textContent = user.nome;
+  if (ura)   ura.textContent   = user.ra;
+  // Dashboard greeting
+  const gr = document.querySelector('.dash-greeting');
+  if (gr) gr.innerHTML = 'Olá, <span>' + esc(user.nome.split(' ')[0]) + '.</span><br>Continue aprendendo.';
+  // Profile
+  const pav  = document.querySelector('.profile-av');
+  const pnm  = document.querySelector('.profile-name');
+  const pra  = document.querySelector('.profile-ra');
+  const ptag = document.querySelector('.profile-tags');
+  if (pav)  pav.textContent  = user.avatar;
+  if (pnm)  pnm.textContent  = user.nome;
+  if (pra)  pra.textContent  = 'RA: ' + user.ra + ' · ' + user.semestre + ' Semestre';
+  if (ptag) ptag.innerHTML   = '<span class="profile-tag">' + esc(user.curso) + '</span><span class="profile-tag">Noturno</span><span class="profile-tag">IRA 8.4</span>';
+  // Profile email
+  const emailEl = document.querySelector('#profileEmail');
+  if (emailEl) emailEl.textContent = user.ra.toLowerCase() + '@aluno.cit.edu.br';
 }
 
 function doRegister() {
-  const nome = document.getElementById('regNome').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  if (!nome || !email) { toast('error','Preencha todos os campos obrigatórios','⚠'); return; }
+  const nome   = document.getElementById('regNome').value.trim();
+  const sobre  = document.getElementById('regSobre').value.trim();
+  const email  = document.getElementById('regEmail').value.trim();
+  const cpf    = document.getElementById('regCPF').value.trim();
+  const curso  = document.getElementById('regCurso').value;
+  const senha  = document.getElementById('regSenha').value;
+  const senha2 = document.getElementById('regSenha2').value;
+  if (!nome || !sobre || !email || !cpf || !curso || !senha || !senha2) {
+    toast('error','Preencha todos os campos obrigatórios','⚠'); return;
+  }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    toast('error','E-mail inválido','✗'); return;
+  }
+  if (senha.length < 8) {
+    toast('error','A senha precisa ter mínimo 8 caracteres','✗'); return;
+  }
+  if (senha !== senha2) {
+    toast('error','As senhas não coincidem','✗'); return;
+  }
   toast('info','Criando sua conta…','📝');
-  setTimeout(() => { showPage('page-app'); toast('success','Conta criada! Bem-vindo ao CIT!','🎉'); }, 1200);
+  const newUser = {
+    ra: '20' + Date.now().toString().slice(-8),
+    senha: senha,
+    nome: nome + ' ' + sobre,
+    curso: curso,
+    semestre: '1º',
+    avatar: (nome[0] + sobre[0]).toUpperCase()
+  };
+  mockUsers.push(newUser);
+  setTimeout(() => {
+    loggedUser = newUser;
+    sessionStorage.setItem('cit_tok', 'tok_' + Math.random().toString(36).slice(2));
+    sessionStorage.setItem('cit_user', JSON.stringify(newUser));
+    applyUser(newUser);
+    showPage('page-app');
+    toast('success','Conta criada! Bem-vindo ao CIT, ' + nome + '!','🎉');
+  }, 1200);
 }
 
 function doLogout() {
@@ -2832,5 +3010,35 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeNotif(); closeSidebar(); }
 });
 </script>
+
+<!-- ═══ Profile Edit Modal ═══ -->
+<div class="modal-veil hidden" id="profileModal" role="dialog" aria-modal="true" aria-label="Editar perfil">
+  <div class="modal-box">
+    <div class="modal-title">Editar Perfil</div>
+    <div class="form-field">
+      <label class="form-label">Telefone</label>
+      <input type="tel" class="form-input" id="editTelefone" placeholder="(11) 9 9876-5432">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Turno</label>
+      <div class="select-wrap">
+        <select class="form-select" id="editTurno">
+          <option value="Matutino">Matutino</option>
+          <option value="Vespertino">Vespertino</option>
+          <option value="Noturno" selected>Noturno</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Nova senha (opcional)</label>
+      <input type="password" class="form-input" id="editSenha" placeholder="Deixe em branco para manter">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeProfileModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveProfile()">Salvar alterações</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
