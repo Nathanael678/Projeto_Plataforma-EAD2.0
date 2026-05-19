@@ -1,14 +1,6 @@
 /**
  * CIT — Centro de Inovação Tecnológica
  * Backend API Server — Node.js / Express
- *
- * Para iniciar:
- *   npm install
- *   npm start   (produção)
- *   npm run dev (desenvolvimento com auto-reload)
- *
- * O frontend deve estar na pasta ../  (um nível acima)
- * O servidor serve os arquivos estáticos automaticamente.
  */
 
 'use strict';
@@ -19,7 +11,8 @@ const helmet     = require('helmet');
 const rateLimit  = require('express-rate-limit');
 const path       = require('path');
 
-const authRoutes    = require('./routes/auth');
+// ROTAS: Comentei a rota de auth que estava fazendo o servidor cair
+// const authRoutes    = require('./routes/auth'); 
 const userRoutes    = require('./routes/users');
 const courseRoutes  = require('./routes/courses');
 const finRoutes     = require('./routes/financial');
@@ -70,7 +63,8 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express.static(path.join(__dirname, '..')));
 
 /* ── API Routes ───────────────────────────────────────── */
-app.use('/api/auth',          authLimiter, authRoutes);
+// Comentei a rota que usava o arquivo inexistente
+// app.use('/api/auth',          authLimiter, authRoutes); 
 app.use('/api/users',         userRoutes);
 app.use('/api/courses',       courseRoutes);
 app.use('/api/financial',     finRoutes);
