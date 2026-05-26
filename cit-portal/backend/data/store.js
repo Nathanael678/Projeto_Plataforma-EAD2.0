@@ -57,4 +57,23 @@ const chatMessages = { ST:[
   { from:'J',  text:'Bom dia! Estou com problema no vídeo da aula 7.', time:'09:15' },
   { from:'ST', text:'Entendido! Tente limpar o cache e recarregar. 🔧', time:'09:16' },
 ]};
+
+quiz:[
+  { q:'Qual alternativa define corretamente a 1ª Forma Normal (1FN)?',
+    opts:['Uma tabela pode ter grupos repetitivos','Todos os atributos devem ser atômicos e não multivalorados','A chave primária pode ser qualquer atributo','Dependências transitivas são permitidas'],
+    ans:1, exp:'A 1FN exige que todos os atributos sejam atômicos e sem grupos repetitivos.' },
+  { q:'O que é uma dependência transitiva?',
+    opts:['Quando A→B e B→C, logo A→C indiretamente','Quando dois atributos dependem da mesma chave','Quando a tabela não tem chave primária','Quando há valores nulos na tabela'],
+    ans:0, exp:'Dependência transitiva ocorre quando um atributo depende de outro que não é chave primária.' },
+  { q:'Qual forma normal elimina dependências transitivas?',
+    opts:['1FN','2FN','3FN','FNBC'],
+    ans:2, exp:'A 3FN elimina dependências transitivas, garantindo que todo atributo dependa diretamente da chave.' },
+  { q:'O que garante a propriedade ACID em um banco de dados?',
+    opts:['O sistema operacional','O gerenciador de transações','O driver de conexão','O índice da tabela'],
+    ans:1, exp:'O gerenciador de transações do SGBD implementa Atomicidade, Consistência, Isolamento e Durabilidade.' },
+  { q:'Qual comando SQL inicia explicitamente uma transação?',
+    opts:['COMMIT','ROLLBACK','BEGIN TRANSACTION','SAVEPOINT'],
+    ans:2, exp:'BEGIN TRANSACTION (ou START TRANSACTION no MySQL) inicia uma transação explícita no banco.' },
+];
+
 module.exports = { users, courses, grade, financial, notifications, events, chatMessages };

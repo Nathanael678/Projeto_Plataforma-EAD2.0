@@ -359,6 +359,291 @@
       }
     }
 
+    /* ══ VIDEO EMBED ════════════════════════════════════════════════════════════ */
+    .video-embed-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--ink);
+      margin-bottom: var(--s4);
+    }
+
+    .video-embed-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ══ BOOK CARD ═══════════════════════════════════════════════════════════════ */
+    .book-card {
+      display: flex;
+      gap: var(--s5);
+      background: var(--paper);
+      border: 1px solid var(--ink-05);
+      border-radius: var(--radius-lg);
+      padding: var(--s6);
+      margin-bottom: var(--s5);
+    }
+
+    .book-cover {
+      width: 80px;
+      height: 110px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--ink) 0%, #2a2a2a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .book-info {
+      flex: 1;
+    }
+
+    .book-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: var(--s1);
+    }
+
+    .book-author {
+      font-size: 13px;
+      color: var(--ink-40);
+      margin-bottom: var(--s3);
+    }
+
+    .book-desc {
+      font-size: 13px;
+      color: var(--ink-60);
+      line-height: 1.6;
+      margin-bottom: var(--s4);
+    }
+
+    .book-tags {
+      display: flex;
+      gap: var(--s2);
+      flex-wrap: wrap;
+    }
+
+    .book-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      background: var(--ground);
+      border-radius: 3px;
+      color: var(--ink-40);
+    }
+
+    /* ══ TURMA TABLE ══════════════════════════════════════════════════════════════ */
+    .turma-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .turma-table th {
+      text-align: left;
+      padding: var(--s3) var(--s4);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      border-bottom: 1px solid var(--ink-05);
+      background: var(--ground);
+    }
+
+    .turma-table td {
+      padding: var(--s4);
+      font-size: 13px;
+      border-bottom: 1px solid var(--ink-05);
+      vertical-align: middle;
+    }
+
+    .turma-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .turma-table tr:hover td {
+      background: var(--ground);
+    }
+
+    .aluno-av-sm {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 10px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--s2);
+    }
+
+    .freq-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+    }
+
+    .freq-bar {
+      width: 60px;
+      height: 4px;
+      background: var(--ink-05);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .freq-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .freq-fill.ok {
+      background: #16A34A;
+    }
+
+    .freq-fill.warn {
+      background: #CA8A04;
+    }
+
+    .freq-fill.bad {
+      background: var(--accent);
+    }
+
+    .resultado-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
+    }
+
+    .resultado-pill.aprovado {
+      background: #F0FDF4;
+      color: #15803D;
+      border: 1px solid #BBF7D0;
+    }
+
+    .resultado-pill.reprovado {
+      background: #FFF5F5;
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+    }
+
+    .resultado-pill.cursando {
+      background: var(--ground);
+      color: var(--ink-40);
+      border: 1px solid var(--ink-10);
+    }
+
+    .nota-input {
+      width: 52px;
+      padding: 4px 6px;
+      border: 1px solid var(--ink-10);
+      border-radius: var(--radius);
+      font-size: 13px;
+      text-align: center;
+      font-family: var(--mono);
+      background: var(--paper);
+      color: var(--ink);
+      transition: border-color var(--fast);
+    }
+
+    .nota-input:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+
+    /* ══ FORUM ═══════════════════════════════════════════════════════════════════ */
+    .forum-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s3);
+    }
+
+    .forum-thread {
+      background: var(--paper);
+      border: 1px solid var(--ink-05);
+      border-radius: var(--radius-lg);
+      padding: var(--s5) var(--s6);
+      cursor: pointer;
+      transition: all var(--fast);
+    }
+
+    .forum-thread:hover {
+      border-color: var(--ink-20);
+      transform: translateX(2px);
+    }
+
+    .forum-thread-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--s4);
+      margin-bottom: var(--s3);
+    }
+
+    .forum-thread-title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .forum-thread-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: var(--ink);
+      color: var(--paper);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .forum-thread-meta {
+      display: flex;
+      gap: var(--s5);
+      font-size: 12px;
+      color: var(--ink-40);
+      flex-wrap: wrap;
+    }
+
+    .forum-thread-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .forum-mod {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .forum-new-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      padding: 9px 20px;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all var(--fast);
+      margin-bottom: var(--s5);
+    }
+
+    .forum-new-btn:hover {
+      background: var(--accent);
+    }
+
     /* ═══════════════════════════════════════════════════════ SCROLLBAR */
     ::-webkit-scrollbar {
       width: 4px;
@@ -2567,6 +2852,10 @@
       border: 1px solid var(--accent-dim);
       color: var(--accent);
     }
+
+    < !-- ── MODULE 3: TURMA ── --><div id="mod-turma" style="display:none"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--s5)"><div><div class="panel-title">👥 Alunos matriculados</div><div style="font-size:12px;color:var(--ink-40);margin-top:4px">Banco de Dados Avançado — CC301 · 2025.1 · 6 alunos</div></div><button onclick="salvarNotas()" style="padding:8px 18px;background:var(--ink);color:var(--paper);border-radius:var(--radius);font-size:13px;font-weight:500;transition:all var(--fast)">Salvar notas</button></div><div class="panel" style="overflow:hidden"><div style="overflow-x:auto"><table class="turma-table"><thead><tr><th>Aluno</th><th>RA</th><th>Nota P1</th><th>Nota P2</th><th>Média</th><th>Frequência</th><th>Resultado</th></tr></thead><tbody id="turmaBody">< !-- Linha 1 --><tr><td><span class="aluno-av-sm">JS</span>João Silva</td><td style="font-family:var(--mono);font-size:12px;color:var(--ink-40)">2023001234</td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="8.5" oninput="calcMedia(this)" data-row="0"></td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="7.8" oninput="calcMedia(this)" data-row="0"></td><td id="media-0" style="font-family:var(--mono);font-weight:600">8.2</td><td><div class="freq-bar-wrap"><div class="freq-bar"><div class="freq-fill ok" style="width:90%"></div></div><span style="font-size:12px;font-family:var(--mono)">90%</span></div></td><td><span class="resultado-pill aprovado" id="res-0">APROVADO</span></td></tr>< !-- Linha 2 --><tr><td><span class="aluno-av-sm">MO</span>Maria Oliveira</td><td style="font-family:var(--mono);font-size:12px;color:var(--ink-40)">2022005678</td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="9.5" oninput="calcMedia(this)" data-row="1"></td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="9.0" oninput="calcMedia(this)" data-row="1"></td><td id="media-1" style="font-family:var(--mono);font-weight:600">9.3</td><td><div class="freq-bar-wrap"><div class="freq-bar"><div class="freq-fill ok" style="width:95%"></div></div><span style="font-size:12px;font-family:var(--mono)">95%</span></div></td><td><span class="resultado-pill aprovado" id="res-1">APROVADO</span></td></tr>< !-- Linha 3 --><tr><td><span class="aluno-av-sm">PA</span>Pedro Almeida</td><td style="font-family:var(--mono);font-size:12px;color:var(--ink-40)">2024009012</td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="4.0" oninput="calcMedia(this)" data-row="2"></td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="5.5" oninput="calcMedia(this)" data-row="2"></td><td id="media-2" style="font-family:var(--mono);font-weight:600">4.8</td><td><div class="freq-bar-wrap"><div class="freq-bar"><div class="freq-fill warn" style="width:72%"></div></div><span style="font-size:12px;font-family:var(--mono)">72%</span></div></td><td><span class="resultado-pill reprovado" id="res-2">REPROVADO</span></td></tr>< !-- Linha 4 --><tr><td><span class="aluno-av-sm">FL</span>Fernanda Lima</td><td style="font-family:var(--mono);font-size:12px;color:var(--ink-40)">2022001122</td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="7.0" oninput="calcMedia(this)" data-row="3"></td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="8.0" oninput="calcMedia(this)" data-row="3"></td><td id="media-3" style="font-family:var(--mono);font-weight:600">7.5</td><td><div class="freq-bar-wrap"><div class="freq-bar"><div class="freq-fill ok" style="width:85%"></div></div><span style="font-size:12px;font-family:var(--mono)">85%</span></div></td><td><span class="resultado-pill aprovado" id="res-3">APROVADO</span></td></tr>< !-- Linha 5 --><tr><td><span class="aluno-av-sm">RC</span>Rafael Carvalho</td><td style="font-family:var(--mono);font-size:12px;color:var(--ink-40)">2023005566</td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="3.5" oninput="calcMedia(this)" data-row="4"></td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="4.0" oninput="calcMedia(this)" data-row="4"></td><td id="media-4" style="font-family:var(--mono);font-weight:600">3.8</td><td><div class="freq-bar-wrap"><div class="freq-bar"><div class="freq-fill bad" style="width:58%"></div></div><span style="font-size:12px;font-family:var(--mono)">58%</span></div></td><td><span class="resultado-pill reprovado" id="res-4">REPROVADO</span></td></tr>< !-- Linha 6 --><tr><td><span class="aluno-av-sm">JT</span>Juliana Torres</td><td style="font-family:var(--mono);font-size:12px;color:var(--ink-40)">2021006677</td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="8.0" oninput="calcMedia(this)" data-row="5"></td><td><input class="nota-input" type="number" min="0" max="10" step="0.1" value="7.5" oninput="calcMedia(this)" data-row="5"></td><td id="media-5" style="font-family:var(--mono);font-weight:600">7.8</td><td><div class="freq-bar-wrap"><div class="freq-bar"><div class="freq-fill ok" style="width:88%"></div></div><span style="font-size:12px;font-family:var(--mono)">88%</span></div></td><td><span class="resultado-pill aprovado" id="res-5">APROVADO</span></td></tr></tbody></table></div></div><div style="font-size:12px;color:var(--ink-40);margin-top:var(--s3)">✓ Aprovado: nota média ≥ 6.0 e frequência ≥ 75% · ✗ Reprovado: média &lt;
+    6.0 ou frequência &lt;
+    75% </div><div class="card-footer"></div>
 
     /* ═══════ CALENDAR VIEW ═══════ */
     .cal-layout {
@@ -4996,21 +5285,11 @@
             <div class="lesson-layout">
               <div>
                 <!-- Video -->
-                <div class="video-wrap">
-                  <div class="video-inner" id="videoInner" onclick="toggleVideo()">
-                    <div class="play-btn" id="playBtn">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
-                        <polygon points="5,3 19,12 5,21" />
-                      </svg>
-                    </div>
-                    <div class="video-overlay-text" id="videoOverlayText">Clique para reproduzir</div>
-                  </div>
-                  <div class="video-bar">
-                    <div class="vid-prog-bg">
-                      <div class="vid-prog-fill" id="vidFill" style="width:35%"></div>
-                    </div>
-                    <div class="vid-time" id="vidTime">14:55 / 42:18</div>
-                  </div>
+                <div class="video-embed-wrap">
+                  <iframe id="lessonIframe" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Videoaula"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                  </iframe>
                 </div>
 
                 <div class="lesson-meta">
@@ -5052,6 +5331,48 @@
                     </div>
                     <button class="btn-dl">↓ Baixar</button>
                   </div>
+                </div>
+
+                <!-- Livro de referência -->
+                <hr class="section-separator">
+                <div class="panel-title" style="margin-bottom:var(--s4)">📖 Livro da disciplina</div>
+                <!-- LIVRO — troque os dados abaixo pelo livro escolhido para a disciplina -->
+                <div class="book-card">
+                  <div class="book-cover">📘</div>
+                  <div class="book-info">
+                    <div class="book-title">Sistemas de Banco de Dados</div>
+                    <!-- SUBSTITUA pelo título do livro escolhido -->
+                    <div class="book-author">Ramez Elmasri & Shamkant B. Navathe — 7ª Edição</div>
+                    <!-- SUBSTITUA pelo autor e edição do livro escolhido -->
+                    <div class="book-desc">
+                      Obra de referência mundial em banco de dados. Abrange modelagem relacional,
+                      SQL, normalização, transações, segurança e bancos NoSQL, com exemplos
+                      práticos aplicáveis ao mercado.
+                      <!-- SUBSTITUA pela descrição do livro escolhido -->
+                    </div>
+                    <div class="book-tags">
+                      <span class="book-tag">ISBN 978-0-13-468815-7</span>
+                      <!-- SUBSTITUA pelo ISBN do livro escolhido -->
+                      <span class="book-tag">736 páginas</span>
+                      <span class="book-tag">Pearson</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Texto de apoio em PDF -->
+                <div class="panel-title" style="margin-bottom:var(--s4)">📄 Texto de apoio</div>
+                <!-- TEXTO PDF — troque o link e título pelo PDF escolhido para a disciplina -->
+                <div class="material-row"
+                  onclick="window.open('https://SEU-LINK-DO-PDF-AQUI.pdf','_blank'); toast('info','Abrindo texto de apoio…','📄')">
+                  <!-- SUBSTITUA o href acima pelo link real do PDF da disciplina -->
+                  <div class="material-ico">📄</div>
+                  <div class="material-info">
+                    <div class="material-name">Introdução à Normalização — Texto de Apoio</div>
+                    <!-- SUBSTITUA pelo título do texto escolhido -->
+                    <div class="material-size">PDF · 1.8 MB · Leitura obrigatória</div>
+                    <!-- SUBSTITUA pelo tamanho real do arquivo -->
+                  </div>
+                  <button class="btn-dl">↓ Abrir PDF</button>
                 </div>
 
                 <!-- Quiz -->
@@ -5177,6 +5498,46 @@
                   </div>
                 </div>
               </div>
+              <!-- Fórum integrado ao calendário -->
+              <div style="margin-top:var(--s6)">
+                <div class="panel-title" style="margin-bottom:var(--s4)">💬 Fóruns agendados</div>
+                <div class="forum-list">
+
+                  <!-- Fórum 1 — SUBSTITUA tema, data, hora e moderador conforme sua disciplina -->
+                  <div class="forum-thread" onclick="toast('info','Abrindo fórum…','💬')">
+                    <div class="forum-thread-header">
+                      <div class="forum-thread-title">Normalização de BD: dúvidas sobre 3FN na prática</div>
+                      <!-- SUBSTITUA pelo tema do fórum da disciplina escolhida -->
+                      <span class="forum-thread-tag">Aberto</span>
+                    </div>
+                    <div class="forum-thread-meta">
+                      <span>📅 20 Jan 2025 · 19h00–20h30</span>
+                      <!-- SUBSTITUA pela data e hora do fórum -->
+                      <span>📍 Portal EAD</span>
+                      <span class="forum-mod">⚑ Moderador: Prof. Carlos Mendes</span>
+                      <!-- SUBSTITUA pelo nome do professor moderador -->
+                    </div>
+                  </div>
+
+                  <!-- Fórum 2 — SUBSTITUA tema, data, hora e moderador -->
+                  <div class="forum-thread" onclick="toast('info','Fórum ainda não iniciado','⏳')">
+                    <div class="forum-thread-header">
+                      <div class="forum-thread-title">Transações ACID: problemas de concorrência em sistemas reais</div>
+                      <!-- SUBSTITUA pelo tema do 2º fórum -->
+                      <span class="forum-thread-tag" style="background:var(--ink-20)">Agendado</span>
+                    </div>
+                    <div class="forum-thread-meta">
+                      <span>📅 05 Fev 2025 · 20h00–21h00</span>
+                      <!-- SUBSTITUA pela data e hora -->
+                      <span>📍 Portal EAD</span>
+                      <span class="forum-mod">⚑ Moderador: Prof. Carlos Mendes</span>
+                      <!-- SUBSTITUA pelo moderador -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
           </section>
 
@@ -6020,6 +6381,27 @@
         fb.textContent = '✗ Incorreto. A resposta certa é: "Todos os atributos devem ser atômicos e não multivalorados".';
         toast('error', 'Resposta incorreta', '✗');
       }
+    }
+
+    /* ─── Turma (notas e resultado) ─── */
+    function calcMedia(input) {
+      const row = input.dataset.row;
+      const tds = input.closest('tr').querySelectorAll('input.nota-input');
+      const p1 = parseFloat(tds[0].value) || 0;
+      const p2 = parseFloat(tds[1].value) || 0;
+      const media = ((p1 + p2) / 2).toFixed(1);
+      document.getElementById('media-' + row).textContent = media;
+      const res = document.getElementById('res-' + row);
+      if (parseFloat(media) >= 6.0) {
+        res.textContent = 'APROVADO';
+        res.className = 'resultado-pill aprovado';
+      } else {
+        res.textContent = 'REPROVADO';
+        res.className = 'resultado-pill reprovado';
+      }
+    }
+    function salvarNotas() {
+      toast('success', 'Notas salvas com sucesso!', '✓');
     }
 
     /* ─── Calendar ─── */
