@@ -74,6 +74,9 @@
 .panel-body-flush { }
 
 /* ── Shared view header ── */
-.view-header { margin-bottom: var(--s8); }
+.view-header {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
 .view-title { font-family: var(--serif); font-size: 28px; letter-spacing: -0.02em; margin-bottom: 4px; }
 .view-sub { font-size: 14px; color: var(--ink-40); }
